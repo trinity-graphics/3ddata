@@ -34,9 +34,8 @@ spec:
             git clone https://github.com/trinity-graphics/3ddata.git
             cd 3ddata/
           fi
-          cd objarverse
-          pip install polars
-          python3 split_df.py --download_dir /mnt/data/objarverse_df --save_dir /mnt/data/objarverse_df_splits
+          cd objarverse/download_script
+          bash run.sh obj
 
         volumeMounts:
         - {name: data, mountPath: /mnt/data}
