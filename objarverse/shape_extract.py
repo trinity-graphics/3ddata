@@ -39,7 +39,6 @@ def process_all(input_dir, output_dir, file_ext, blender_exec='blender', jobs=No
 	output_dir = os.path.abspath(output_dir)
 	os.makedirs(output_dir, exist_ok=True)
 
-	# Collect .obj files recursively
 	raw_files = []
 	for root, _, files in os.walk(input_dir):
 		for f in files:
@@ -71,10 +70,10 @@ def process_all(input_dir, output_dir, file_ext, blender_exec='blender', jobs=No
 		os.makedirs(meta_dst_dir, exist_ok=True)
 
 		tasks.append((src, dst, meta_dst))
-    
-    if len(tasks) == 0:
-        print('All processed files has been existed')
-        exit(0)
+	
+	if len(tasks) == 0:
+		print('All processed files has been existed')
+		exit(0)
 
 	# Run Blender jobs in parallel; each task spawns a Blender process
 	# set module-level blender exec for worker pickling
