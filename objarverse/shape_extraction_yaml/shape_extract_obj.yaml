@@ -24,7 +24,7 @@ spec:
           sizeLimit: 256Gi
       containers:
       - name: objarverse-shape-extraction-obj
-        image: kohido/3d_dl_cuda129:v0.0.3
+        image: kohido/3d_dl_cuda129:v0.0.4
         env:
         - name: PYTHONUNBUFFERED
           value: "1"
