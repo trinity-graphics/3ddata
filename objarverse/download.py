@@ -7,7 +7,7 @@ from tqdm import tqdm
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Process 3D files by filetype.")
-    parser.add_argument("--split_dỉr", type=str, required=True, help="Directory to save processed files")
+    parser.add_argument("--split_dir", type=str, required=True, help="Directory to save processed files")
     parser.add_argument("--savedir", type=str, required=True, help="Directory to save processed files")
     parser.add_argument("--filetype", type=str, required=True, help="Filetype to process")
     parser.add_argument("--chunk", type=int, required=True, help="Chunk index to process (required)")
@@ -16,7 +16,7 @@ if __name__ == "__main__":
 
     filetype = args.filetype.lower()
 
-    objarverse_folder = args.split_dỉr
+    objarverse_folder = args.split_dir
 
     save_dir = os.path.join(args.savedir, 'objarverse_raw', filetype, args.source)
     os.makedirs(save_dir, exist_ok=True)
