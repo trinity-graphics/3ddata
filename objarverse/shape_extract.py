@@ -38,6 +38,8 @@ def process_all(input_dir, output_dir, file_ext, blender_exec='blender', jobs=No
 	input_dir = os.path.abspath(input_dir)
 	output_dir = os.path.abspath(output_dir)
 	os.makedirs(output_dir, exist_ok=True)
+	metadata_dir = os.path.join(output_dir, 'metadata')
+	os.makedirs(metadata_dir, exist_ok=True)
 
 	raw_files = []
 	for root, _, files in os.walk(input_dir):
@@ -62,12 +64,7 @@ def process_all(input_dir, output_dir, file_ext, blender_exec='blender', jobs=No
 		dst_dir = os.path.dirname(dst)
 		os.makedirs(dst_dir, exist_ok=True)
 
-		# metadata path mirrors output structure under output_dir/metadata
-		meta_rel = os.path.splitext(rel)[0] + '.json'
-		meta_dst = os.path.join(output_dir, 'metadata', meta_rel)
-		meta_dst_dir = os.path.dirname(meta_dst)
-		os.makedirs(meta_dst_dir, exist_ok=True)
-
+		meta_dst = os.path.join(metadata_dir, os.path.basename(src).replace(file_ext, 'json'))
 		tasks.append((src, dst, meta_dst, file_ext))
 	
 	if len(tasks) == 0:
