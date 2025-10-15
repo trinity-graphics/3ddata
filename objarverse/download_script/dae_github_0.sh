@@ -2,5 +2,5 @@ cd ..
 
 for chunk in {0..3}
 do
-    python3 download.py --split_dỉr /mnt/data/objarverse_df_splits --savedir /mnt/data --filetype dae --source github --chunk $chunk
+    python3 download.py --split_dir /mnt/data/objarverse_df_splits --savedir /mnt/data --filetype dae --source github --chunk $chunk
 done

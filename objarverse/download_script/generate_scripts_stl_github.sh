@@ -22,7 +22,7 @@ for group in $(seq 0 $((groups-1))); do
     echo "" >> $script
     echo "for chunk in {$start..$end}" >> $script
     echo "do" >> $script
-    echo "    python3 download.py --split_dỉr /mnt/data/objarverse_df_splits --savedir $SAVEDIR --filetype stl --source github --chunk \$chunk" >> $script
+    echo "    python3 download.py --split_dir /mnt/data/objarverse_df_splits --savedir $SAVEDIR --filetype stl --source github --chunk \$chunk" >> $script
     echo "done" >> $script
 
     start=$((end+1))
