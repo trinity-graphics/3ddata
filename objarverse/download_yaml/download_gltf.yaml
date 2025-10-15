@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: dokh-objarverse-download-obj
+  name: dokh-objarverse-download-gltf
 spec:
   ttlSecondsAfterFinished: 60
   template:
@@ -20,7 +20,7 @@ spec:
           medium: Memory
           sizeLimit: 256Gi
       containers:
-      - name: objarverse-download-obj
+      - name: objarverse-download-gltf
         image: kohido/3d_dl_cuda129:v0.0.3
         env:
         - name: PYTHONUNBUFFERED
@@ -29,7 +29,7 @@ spec:
         args:
         - |
           set -e
-          cd /mnt/prj/
+          cd /mnt/prj
           if [ -d "3ddata" ]; then
             cd 3ddata
             git pull
@@ -38,12 +38,12 @@ spec:
             cd 3ddata/
           fi
           cd objarverse/download_script
-          bash run.sh obj
+          bash run.sh gltf
 
         volumeMounts:
         - {name: project, mountPath: /mnt/prj/}
         - {name: data, mountPath: /mnt/data}
         - {name: dshm, mountPath: /dev/shm}
         resources:
-          limits:   { cpu: "48",  memory: "256Gi" }
-          requests: { cpu: "48",  memory: "256Gi" }
+          limits:   { cpu: "16",  memory: "64Gi" }
+          requests: { cpu: "16",  memory: "64Gi" }

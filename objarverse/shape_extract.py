@@ -54,7 +54,7 @@ def process_all(input_dir, output_dir, file_ext, blender_exec='blender', jobs=No
 
 	# Prepare tasks preserving relative paths
 	tasks = []
-	for src in raw_files:
+	for src in raw_files[:10]:
 		rel = os.path.relpath(src, input_dir)
 		dst = os.path.join(output_dir, rel)
 		dst = os.path.splitext(dst)[0] + '.obj'
@@ -90,8 +90,8 @@ def process_all(input_dir, output_dir, file_ext, blender_exec='blender', jobs=No
 	failed = [(tasks[i][0], r) for i, r in enumerate(results) if r[0] != 0]
 	if failed:
 		print(f"{len(failed)} files failed to process:")
-		# for src, (code, out) in failed:
-		# 	print(f'- {src} (exit {code})')
+		for src, (code, out) in failed:
+			print(f'- {src} (exit {code})')
 	else:
 		print('All files processed successfully.')
 

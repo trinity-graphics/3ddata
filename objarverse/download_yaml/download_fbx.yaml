@@ -9,6 +9,9 @@ spec:
       schedulerName: volcano
       restartPolicy: Never
       volumes:
+      - name: project
+        persistentVolumeClaim:
+          claimName: prj-0
       - name: data
         persistentVolumeClaim:
           claimName: objarverse-raw
@@ -26,7 +29,7 @@ spec:
         args:
         - |
           set -e
-          cd /mnt/data
+          cd /mnt/prj
           if [ -d "3ddata" ]; then
             cd 3ddata
             git pull
@@ -38,8 +41,9 @@ spec:
           bash run.sh glb
 
         volumeMounts:
+        - {name: project, mountPath: /mnt/prj/}
         - {name: data, mountPath: /mnt/data}
         - {name: dshm, mountPath: /dev/shm}
         resources:
-          limits:   { cpu: "48",  memory: "64Gi" }
-          requests: { cpu: "48",  memory: "64Gi" }
+          limits:   { cpu: "16",  memory: "64Gi" }
+          requests: { cpu: "16",  memory: "64Gi" }
