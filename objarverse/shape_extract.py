@@ -97,14 +97,12 @@ def process_all(input_dir, output_dir, file_ext, blender_exec='blender', jobs=No
 
 
 if __name__ == '__main__':
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--input_dir", required=True, help="input_dir")
-    parser.add_argument("--output_dir", required=True, help="output_dir")
-    parser.add_argument("--blender_exec", default='blender', help="blender execution")
-    parser.add_argument("--jobs", default=4, help="# Jobs")
-    parser.add_argument("--file_ext", required=True, help="file_ext")
-
-    args = parser.parse_args()
-
-	process_all(args.input_dir, args.output_dir, args.file_ext, blender_exec=args.blender_exec, jobs=args.jobs)
+	parser = argparse.ArgumentParser()
+	parser.add_argument("--input_dir", required=True, help="input_dir")
+	parser.add_argument("--output_dir", required=True, help="output_dir")
+	parser.add_argument("--blender_exec", default='blender', help="blender execution")
+	parser.add_argument("--jobs", default=4, help="# Jobs")
+	parser.add_argument("--file_ext", required=True, help="file_ext")
+	
+	args = parser.parse_args()
+	process_all(args.input_dir, args.output_dir, args.file_ext, args.blender_exec, args.jobs)
