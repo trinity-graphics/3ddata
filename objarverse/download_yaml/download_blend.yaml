@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: dokh-objarverse-download-obj
+  name: dokh-objarverse-download-blend
 spec:
   ttlSecondsAfterFinished: 60
   template:
@@ -20,7 +20,7 @@ spec:
           medium: Memory
           sizeLimit: 256Gi
       containers:
-      - name: objarverse-download-obj
+      - name: objarverse-download-blend
         image: kohido/3d_dl_cuda129:v0.0.3
         env:
         - name: PYTHONUNBUFFERED
@@ -38,7 +38,7 @@ spec:
             cd 3ddata/
           fi
           cd objarverse/download_script
-          bash run.sh obj
+          bash run.sh blend
 
         volumeMounts:
         - {name: project, mountPath: /mnt/prj/}
