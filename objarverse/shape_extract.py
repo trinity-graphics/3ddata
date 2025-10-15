@@ -69,7 +69,7 @@ def process_all(input_dir, output_dir, file_ext, blender_exec='blender', jobs=No
 		meta_dst_dir = os.path.dirname(meta_dst)
 		os.makedirs(meta_dst_dir, exist_ok=True)
 
-		tasks.append((src, dst, meta_dst))
+		tasks.append((src, dst, meta_dst, file_ext))
 	
 	if len(tasks) == 0:
 		print('All processed files has been existed')
