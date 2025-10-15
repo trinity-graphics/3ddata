@@ -19,8 +19,8 @@ IMPORT_FUNCTIONS: Dict[str, Callable] = {
     "blend": bpy.ops.wm.append,
 }
 
-def import_obj(filepath):
-    object_name, file_ext = os.path.basename(filepath).split('.') # Get object name and file_ext
+def import_obj(filepath, file_ext):
+    object_name = os.path.basename(filepath) # Get object name
     existing_objects = set(bpy.context.scene.objects) # Store the current objects in the scene
     IMPORT_FUNCTIONS[file_ext](filepath=filepath) # Import
     new_objects = set(bpy.context.scene.objects) - existing_objects # Determine the newly imported objects
@@ -103,7 +103,7 @@ def main(argv):
 
     # Import
     try:
-        name = import_obj(src)
+        name = import_obj(src, file_ext)
     except Exception as e:
         print(f'Import failed: {e}')
         return 3
@@ -111,8 +111,6 @@ def main(argv):
     # Export
     try:
         # Ensure destination directory exists
-        dst_dir = os.path.dirname(dst)
-        os.makedirs(dst_dir, exist_ok=True)
         export_obj(dst)
     except Exception as e:
         print(f'Export failed: {e}')
