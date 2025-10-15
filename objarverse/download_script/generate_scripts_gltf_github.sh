@@ -1,6 +1,3 @@
-# This script will generate 16 bash scripts, each processing about 51 chunks (some may have 50).
-# Each script will be named obj_github_GROUP.sh (GROUP from 0 to 15)
-
 SAVEDIR=${1:-}
 
 if [ -z "$SAVEDIR" ]; then
