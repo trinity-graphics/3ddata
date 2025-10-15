@@ -95,7 +95,7 @@ if __name__ == '__main__':
 
     os.makedirs(args.output_dir, exist_ok=True)
 
-    check_dct_path = os.path.join(os.getcwd(), 'clean.json')
+    check_dct_path = os.path.join(args.output_dir, 'clean.json')
     check_dct = {
         'reading_mesh' : [],
         'merge_close_vertices': [],
