@@ -82,8 +82,8 @@ def export_tria_obj(mesh, file_path):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
-	parser.add_argument("--input_dir", required=True, help="input_dir")
-	parser.add_argument("--output_dir", required=True, help="output_dir")
+    parser.add_argument("--input_dir", required=True, help="input_dir")
+    parser.add_argument("--output_dir", required=True, help="output_dir")
 
     args = parser.parse_args()
 
