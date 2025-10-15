@@ -1,5 +1,5 @@
-INPUT_DIR = /mnt/raw/objarverse_raw
-OUTPUT_DIR = /mnt/shape/objarverse_shape
+INPUT_DIR="/mnt/raw/objarverse_raw"
+OUTPUT_DIR="/mnt/shape/objarverse_shape"
 
 cd ..
 
