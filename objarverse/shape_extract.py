@@ -87,7 +87,7 @@ def process_all(input_dir, output_dir, file_ext, blender_exec='blender', jobs=No
 	if failed:
 		print(f"{len(failed)} files failed to process:")
 		for src, (code, out) in failed:
-			print(f'- {src} (exit {code})')
+			print(f'- {src} (exit {code}) (out: {out})')
 	else:
 		print('All files processed successfully.')
 
