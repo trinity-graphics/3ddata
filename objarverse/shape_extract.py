@@ -55,9 +55,8 @@ def process_all(input_dir, output_dir, file_ext, blender_exec='blender', jobs=No
 	# Prepare tasks preserving relative paths
 	tasks = []
 	for src in raw_files[:10]:
-		rel = os.path.relpath(src, input_dir)
-		dst = os.path.join(output_dir, rel)
-		dst = os.path.splitext(dst)[0] + '.obj'
+		dst = os.path.join(output_dir, os.path.basename(src).replace(file_ext, 'obj'))
+		print(dst)
 		if os.path.exists(dst):
 			continue
 		dst_dir = os.path.dirname(dst)

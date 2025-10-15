@@ -151,7 +151,6 @@ def main(argv):
             json.dump(metadata, f)
     except Exception as e:
         print(f'Failed to write metadata {meta_out}: {e}')
-        # not fatal; still return success because export succeeded
 
     print('Worker: done')
     return 0
