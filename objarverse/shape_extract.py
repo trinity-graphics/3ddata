@@ -3,7 +3,7 @@ import sys
 
 import multiprocessing
 import subprocess
-import argsparse
+import argparse
 
 from functools import partial
 from tqdm import tqdm
