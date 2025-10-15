@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: download-abc-obj
+spec:
+  ttlSecondsAfterFinished: 60
+  template:
+    spec:
+      schedulerName: volcano
+      restartPolicy: Never
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: abc-obj
+      - name: dshm
+        emptyDir:
+          medium: Memory
+          sizeLimit: 16Gi
+      containers:
+      - name: abcobj
+        image: kohido/base_dl_cuda129:v0.0.7
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        command: ["bash","-lc"]
+        args:
+        - |
+            set -e
+            df -h
+            apt install wget -y
+            cd /mnt/data
+            cat obj_v00.txt | xargs -n 2 -P 8 sh -c 'wget --no-check-certificate $0 -O obj/$1'
+
+        volumeMounts:
+        - {name: data, mountPath: /mnt/data}
+        - {name: dshm, mountPath: /dev/shm}
+        resources:
+          limits:   { nvidia.com/gpu: 2, cpu: "24",  memory: "64Gi" }
+          requests: { nvidia.com/gpu: 2, cpu: "16",  memory: "64Gi" }
