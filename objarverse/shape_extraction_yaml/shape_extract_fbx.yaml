@@ -1,0 +1,53 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: dokh-objarverse-shape-extraction-fbx
+spec:
+  ttlSecondsAfterFinished: 60
+  template:
+    spec:
+      schedulerName: volcano
+      restartPolicy: Never
+      volumes:
+      - name: project
+        persistentVolumeClaim:
+          claimName: prj-0
+      - name: raw
+        persistentVolumeClaim:
+          claimName: objarverse-raw
+      - name: shape
+        persistentVolumeClaim:
+          claimName: objarverse-shape
+      - name: dshm
+        emptyDir:
+          medium: Memory
+          sizeLimit: 256Gi
+      containers:
+      - name: objarverse-shape-extraction-fbx
+        image: kohido/3d_dl_cuda129:v0.0.4
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        command: ["bash","-lc"]
+        args:
+        - |
+          set -e
+          cd /mnt/prj/
+          if [ -d "3ddata" ]; then
+            cd 3ddata
+            git pull
+          else
+            git clone https://github.com/trinity-graphics/3ddata.git
+            cd 3ddata/
+          fi
+          cd objarverse/shape_extraction_script
+          bash shape_extract_fbx.sh
+
+        volumeMounts:
+        - {name: project, mountPath: /mnt/prj/}
+        - {name: raw, mountPath: /mnt/raw/}
+        - {name: shape, mountPath: /mnt/shape/}
+        - {name: dshm, mountPath: /dev/shm}
+        resources:
+          limits:   { cpu: "96",  memory: "512Gi" }
+          requests: { cpu: "96",  memory: "512Gi" }
