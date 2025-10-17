@@ -1,0 +1,53 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: dokh-objarverse-shape-clean-dae-batch
+spec:
+  ttlSecondsAfterFinished: 60
+  template:
+    spec:
+      schedulerName: volcano
+      restartPolicy: Never
+      volumes:
+      - name: project
+        persistentVolumeClaim:
+          claimName: prj-0
+      - name: shape
+        persistentVolumeClaim:
+          claimName: objarverse-shape
+      - name: clean
+        persistentVolumeClaim:
+          claimName: objarverse-clean
+      - name: dshm
+        emptyDir:
+          medium: Memory
+          sizeLimit: 256Gi
+      containers:
+      - name: objarverse-shape-clean-dae-batch
+        image: kohido/3d_dl_cuda129:v0.0.4
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        command: ["bash","-lc"]
+        args:
+        - |
+          set -e
+          cd /mnt/prj/
+          if [ -d "3ddata" ]; then
+            cd 3ddata
+            git pull
+          else
+            git clone https://github.com/trinity-graphics/3ddata.git
+            cd 3ddata/
+          fi
+          cd objarverse/shape_clean_script
+          bash shape_clean_dae_batch.sh 8
+
+        volumeMounts:
+        - {name: project, mountPath: /mnt/prj/}
+        - {name: shape, mountPath: /mnt/shape/}
+        - {name: clean, mountPath: /mnt/clean/}
+        - {name: dshm, mountPath: /dev/shm}
+        resources:
+          limits:   { cpu: "48",  memory: "256Gi" }
+          requests: { cpu: "48",  memory: "256Gi" }
