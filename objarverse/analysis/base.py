@@ -79,7 +79,7 @@ if __name__ == '__main__':
         raise ValueError(f"{args.folder_path} does not exist")
     
     output_dir = os.path.dirname(args.output_path)
-    os.make_dirs(output_dir, exist_ok=True)
+    os.makedirs(output_dir, exist_ok=True)
 
     df = main(folder_path=args.folder_path, num_workers=args.jobs)
 
