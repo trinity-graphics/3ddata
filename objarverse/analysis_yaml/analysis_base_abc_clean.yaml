@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: dokh-objarverse-shape-clean-abc
+  name: dokh-objarverse-analysis-base-abc-clean
 spec:
   ttlSecondsAfterFinished: 60
   template:
@@ -20,7 +20,7 @@ spec:
           medium: Memory
           sizeLimit: 256Gi
       containers:
-      - name: objarverse-shape-clean-abc
+      - name: objarverse-analysis-base-abc-clean
         image: kohido/3d_dl_cuda129:v0.0.5
         env:
         - name: PYTHONUNBUFFERED
