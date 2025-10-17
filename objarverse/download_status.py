@@ -39,9 +39,13 @@ if __name__ == "__main__":
     args = parser.parse_args()
     os.makedirs(args.status_dir, exist_ok=True)
 
-    formarts = [args.format] if args.format else FORMATS
+    if args.format is not None:
+        if args.format not in FORMATS:
+            raise ValueError(f"args.format: {args.format} must be one of {FORMATS}")
 
-    for fm in formarts:
+    formats = [args.format] if args.format else FORMATS
+
+    for fm in formats:
         fm_dir = os.path.join(args.download_dir, fm)
         if not os.path.exists(fm_dir):
             continue
