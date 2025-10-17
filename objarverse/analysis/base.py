@@ -8,28 +8,44 @@ import numpy as np
 
 
 def analyze_mesh(file_path):
-    """Load a mesh and extract geometric + connectivity statistics."""
+    """Analyze a single mesh file for geometric and connectivity stats."""
     try:
         mesh = trimesh.load(file_path, force='mesh')
         if not isinstance(mesh, trimesh.Trimesh):
-            return None  # skip if not a mesh
+            return None  # skip non-mesh containers
 
-        # Vertices and faces
+        # --- Basic properties ---
         num_vertices = len(mesh.vertices)
         num_faces = len(mesh.faces)
 
-        # Edges and connectivity
+        # --- Edges and connectivity ---
         edges = mesh.edges_sorted
         edges_unique, edges_counts = np.unique(edges, axis=0, return_counts=True)
-
         num_internal_edges = np.sum(edges_counts == 2)
         num_boundary_edges = np.sum(edges_counts == 1)
 
-        # Vertex connectivity (number of edges incident to each vertex)
+        # --- Vertex connectivity ---
         vertex_connectivity = np.bincount(edges_unique.flatten(), minlength=num_vertices)
         min_conn = int(vertex_connectivity.min())
         max_conn = int(vertex_connectivity.max())
         avg_conn = float(vertex_connectivity.mean())
+
+        # --- Strongly connected components (disconnected parts) ---
+        components = mesh.split(only_watertight=False)
+        num_components = len(components)
+
+        # Get size info for smallest and largest components
+        if num_components > 0:
+            component_sizes = [(len(c.vertices), len(c.faces)) for c in components]
+            sorted_components = sorted(component_sizes, key=lambda x: x[0])  # sort by vertex count
+            smallest_v, smallest_f = sorted_components[0]
+            largest_v, largest_f = sorted_components[-1]
+        else:
+            smallest_v = smallest_f = largest_v = largest_f = 0
+
+        # --- Geometry ---
+        volume = float(mesh.volume) if mesh.is_volume else 0.0
+        area = float(mesh.area)
 
         return {
             "filename": os.path.basename(file_path),
@@ -40,10 +56,18 @@ def analyze_mesh(file_path):
             "min_connectivity": min_conn,
             "max_connectivity": max_conn,
             "avg_connectivity": avg_conn,
+            "num_components": num_components,
+            "smallest_component_vertices": smallest_v,
+            "smallest_component_faces": smallest_f,
+            "largest_component_vertices": largest_v,
+            "largest_component_faces": largest_f,
+            "mesh_volume": volume,
+            "mesh_area": area,
             "file_path": file_path,
         }
+
     except Exception as e:
-        print(f"Error processing {file_path}: {e}")
+        print(f"[Error] {file_path}: {e}")
         return None
 
 
