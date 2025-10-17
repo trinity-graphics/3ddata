@@ -69,11 +69,11 @@ def main(folder_path, num_workers=None):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
-	parser.add_argument("--folder_path", required=True, type=str, help="folder_path")
-	parser.add_argument("--output_path", required=True, type=str, help="output_path")
-	parser.add_argument("--jobs", default=4, help="# Jobs")
-	
-	args = parser.parse_args()
+    parser.add_argument("--folder_path", required=True, type=str, help="folder_path")
+    parser.add_argument("--output_path", required=True, type=str, help="output_path")
+    parser.add_argument("--jobs", default=4, help="# Jobs")
+    
+    args = parser.parse_args()
 
     if not os.path.exists(args.folder_path):
         raise ValueError(f"{args.folder_path} does not exist")
