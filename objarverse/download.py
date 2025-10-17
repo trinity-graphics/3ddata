@@ -5,6 +5,8 @@ import argparse
 from glob import glob
 from tqdm import tqdm
 
+from download_status import check_file_status
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Process 3D files by filetype.")
     parser.add_argument("--split_dir", type=str, required=True, help="Directory to save processed files")
@@ -56,7 +58,8 @@ if __name__ == "__main__":
         save_path = os.path.join(chunk_save_dir, filename)
 
         if os.path.exists(save_path):
-            continue
+            if check_file_status(save_path) == 'success':
+                continue
 
         if args.source == 'github':
             raw_url = url.replace("github.com", "raw.githubusercontent.com").replace("/blob/", "/")
