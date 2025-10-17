@@ -117,6 +117,9 @@ if __name__ == '__main__':
     }
 
     for file in tqdm(file_paths, desc='Cleaning files', unit='file'):
+        output_path = os.path.join(args.output_dir, os.path.basename(file))
+        if os.path.exists(output_path):
+            continue
         try:
             mesh = import_tria_obj(file)
             if mesh is None:
@@ -170,8 +173,6 @@ if __name__ == '__main__':
         except Exception as e:
             check_dct['normalize_vertices_scale'].append({'file': file, 'error': str(e)})
             continue
-
-        output_path = os.path.join(args.output_dir, os.path.basename(file))
         try:
             export_tria_obj(mesh, output_path)
         except Exception as e:
