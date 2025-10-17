@@ -38,7 +38,7 @@ spec:
             cd 3ddata/
           fi
           cd objarverse
-          python3 download_status.py --download_dir /mnt/data/objarverse_raw --status_dir /mnt/data/objarverse_download_status --jobs 24
+          python3 download_status.py --download_dir /mnt/data/objarverse_raw --status_dir /mnt/data/objarverse_download_status --jobs 48
 
         volumeMounts:
         - {name: project, mountPath: /mnt/prj/}

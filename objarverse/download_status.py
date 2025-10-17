@@ -55,7 +55,7 @@ if __name__ == "__main__":
                 print(f"⚠️ No files found for {fm}/{src}")
                 continue
 
-            log = {'success': 0, '404': 0, 'limit': 0}
+            log = {'success': 0, '404': 0, 'limit': 0, 'total': len(file_paths)}
 
             # Use multiprocessing
             num_workers = max(1, min(cpu_count() - 1, args.jobs))
