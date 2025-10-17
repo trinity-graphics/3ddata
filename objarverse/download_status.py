@@ -33,6 +33,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Process 3D files by filetype.")
     parser.add_argument("--download_dir", type=str, required=True, help="Download Directory")
     parser.add_argument("--status_dir", type=str, required=True, help="Status Directory")
+    parser.add_argument("--jobs", type=int, required=True, help="# Jobs")
 
     args = parser.parse_args()
     os.makedirs(args.status_dir, exist_ok=True)
@@ -57,10 +58,9 @@ if __name__ == "__main__":
             log = {'success': 0, '404': 0, 'limit': 0}
 
             # Use multiprocessing
-            num_workers = max(1, cpu_count() - 1)
+            num_workers = max(1, min(cpu_count() - 1, args.jobs))
             with Pool(num_workers) as pool:
-                for result in tqdm(pool.imap_unordered(check_file_status, file_paths),
-                                   total=len(file_paths), desc=f"{fm}/{src}", ncols=100):
+                for result in tqdm(pool.imap_unordered(check_file_status, file_paths), total=len(file_paths), desc=f"{fm}/{src}", ncols=100):
                     log[result] += 1
 
             # Save results

@@ -20,7 +20,7 @@ spec:
           medium: Memory
           sizeLimit: 256Gi
       containers:
-      - name: objarverse-download-abc
+      - name: objarverse-status
         image: kohido/3d_dl_cuda129:v0.0.3
         env:
         - name: PYTHONUNBUFFERED
@@ -38,12 +38,12 @@ spec:
             cd 3ddata/
           fi
           cd objarverse
-          python3 download_status.py --download_dir /mnt/data/objarverse_raw --status_dir /mnt/data/objarverse_download_status
+          python3 download_status.py --download_dir /mnt/data/objarverse_raw --status_dir /mnt/data/objarverse_download_status --jobs 24
 
         volumeMounts:
         - {name: project, mountPath: /mnt/prj/}
         - {name: data, mountPath: /mnt/data}
         - {name: dshm, mountPath: /dev/shm}
         resources:
-          limits:   { cpu: "16",  memory: "64Gi" }
-          requests: { cpu: "16",  memory: "64Gi" }
+          limits:   { cpu: "48",  memory: "256Gi" }
+          requests: { cpu: "48",  memory: "256Gi" }
