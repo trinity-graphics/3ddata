@@ -34,11 +34,14 @@ if __name__ == "__main__":
     parser.add_argument("--download_dir", type=str, required=True, help="Download Directory")
     parser.add_argument("--status_dir", type=str, required=True, help="Status Directory")
     parser.add_argument("--jobs", type=int, required=True, help="# Jobs")
+    parser.add_argument("--format", type=str, default, help=f"Format (can be one of {FORMATS})")
 
     args = parser.parse_args()
     os.makedirs(args.status_dir, exist_ok=True)
 
-    for fm in FORMATS:
+    formarts = [args.format] if args.format else FORMATS
+
+    for fm in formarts:
         fm_dir = os.path.join(args.download_dir, fm)
         if not os.path.exists(fm_dir):
             continue
