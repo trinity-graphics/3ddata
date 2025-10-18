@@ -48,6 +48,7 @@ spec:
           cd thingi10k
           if [! -f Thingi10K.tar.gz]; then
             gdown 1RlDvNiFLDRztN0zWqQxmeraRG-XXFHUT
+            tar -xf Thingi10K.tar.gz
           else
             tar -xf Thingi10K.tar.gz
           fi
