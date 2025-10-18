@@ -48,9 +48,9 @@ if __name__ == "__main__":
 
             log[f"{fm}/{src}"] = len(file_paths)
 
-            # Save results
-            with open(args.status_path, 'w') as file:
-                json.dump(log, file, indent=4)
+    # Save results
+    with open(args.status_path, 'w') as file:
+        json.dump(log, file, indent=4)
 
-            print(f"✅ Saved log to: {args.status_path}")
-            print(f"   Summary: {log}")
+    print(f"✅ Saved log to: {args.status_path}")
+    print(f"   Summary: {log}")
