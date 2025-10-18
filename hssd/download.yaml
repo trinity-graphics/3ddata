@@ -41,7 +41,19 @@ spec:
           mkdir -p hssd
           cd hssd
 
-          git clone https://huggingface.co/datasets/hssd/hssd-models
+          if [ -d "hssd-models" ]; then
+            echo "📁 Repo exists, pulling updates..."
+            cd hssd-models
+            git pull
+          else
+            echo "⬇️ Cloning dataset repo..."
+            git clone https://user:${HF_TOKEN}@huggingface.co/datasets/hssd/hssd-models
+            cd hssd-models
+          fi
+
+          git lfs fetch --all
+          git lfs checkout
+          git lfs pull
           
         volumeMounts:
         - {name: project, mountPath: /mnt/prj/}
