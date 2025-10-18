@@ -108,5 +108,5 @@ if __name__ == '__main__':
     df = main(folder_path=args.folder_path, num_workers=args.jobs)
 
     if df is not None:
-        print(df)
+        # print(df)
         df.write_csv(args.output_path)

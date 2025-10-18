@@ -38,7 +38,7 @@ spec:
             cd 3ddata/
           fi
           cd objarverse/analysis_script
-          bash analysis_base_gltf_clean_batch.sh 16
+          bash analysis_base_gltf_clean_batch.sh 8
 
         volumeMounts:
         - {name: project, mountPath: /mnt/prj/}
