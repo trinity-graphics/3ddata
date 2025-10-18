@@ -21,7 +21,7 @@ spec:
           sizeLimit: 256Gi
       containers:
       - name: hssd-download
-        image: kohido/3d_dl_cuda129:v0.0.6
+        image: kohido/3d_dl_cuda129:v0.0.7
         env:
         - name: PYTHONUNBUFFERED
           value: "1"
