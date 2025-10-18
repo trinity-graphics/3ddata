@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: dokh-objarverse-zip-abc-shape
+  name: dokh-objarverse-zip-glb-clean
 spec:
   ttlSecondsAfterFinished: 60
   template:
@@ -11,7 +11,7 @@ spec:
       volumes:
       - name: data
         persistentVolumeClaim:
-          claimName: objarverse-shape
+          claimName: objarverse-clean
       - name: key
         persistentVolumeClaim:
           claimName: key
@@ -20,7 +20,7 @@ spec:
           medium: Memory
           sizeLimit: 64Gi
       containers:
-      - name: objarverse-zip-abc-shape
+      - name: objarverse-zip-glb-clean
         image: kohido/base_dl_cuda129:v0.0.7
         env:
         - name: PYTHONUNBUFFERED
@@ -28,8 +28,8 @@ spec:
         command: ["bash","-lc"]
         args:
         - |
-            cd /mnt/data/objarverse_shape
-            zip -r abc.zip abc/
+            cd /mnt/data/objarverse_clean
+            zip -r glb.zip glb/
 
         volumeMounts:
         - {name: data, mountPath: /mnt/data}
