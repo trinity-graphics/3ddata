@@ -27,7 +27,7 @@ if __name__ == "__main__":
 
     formats = [args.format] if args.format else FORMATS
 
-    logs = {}
+    log = {}
 
     for fm in formats:
         fm_dir = os.path.join(args.cleaning_dir, fm)

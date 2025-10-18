@@ -38,7 +38,7 @@ spec:
             cd 3ddata/
           fi
           cd objarverse/
-          python3 shape_clean_status --cleaning_dir /mnt/clean/objarverse_clean --status_path /mnt/clean/objarverse_clean/cleaning_status.json
+          python3 shape_clean_status.py --cleaning_dir /mnt/clean/objarverse_clean --status_path /mnt/clean/objarverse_clean/cleaning_status.json
 
         volumeMounts:
         - {name: project, mountPath: /mnt/prj/}
