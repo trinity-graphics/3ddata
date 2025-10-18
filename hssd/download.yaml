@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: dokh-thingi10k-download
+  name: dokh-hssd-download
 spec:
   ttlSecondsAfterFinished: 60
   template:
@@ -20,31 +20,29 @@ spec:
           medium: Memory
           sizeLimit: 256Gi
       containers:
-      - name: thingi10k-download
+      - name: hssd-download
         image: kohido/3d_dl_cuda129:v0.0.6
         env:
         - name: PYTHONUNBUFFERED
           value: "1"
-        - name: GITHUB_TOKEN
+        - name: HF_TOKEN
           valueFrom:
             secretKeyRef:
               name: dokh-secret
-              key: GITHUB_TOKEN
+              key: HF_TOKEN
         command: ["bash","-lc"]
         args:
         - |
           set -e
+          git config --global credential.helper store
+          hf auth login --token "$HF_TOKEN" --add-to-git-credential
 
           cd /mnt/data
-          mkdir -p thingi10k
-          cd thingi10k
-          if [ ! -f Thingi10K.tar.gz ]; then
-            gdown 1RlDvNiFLDRztN0zWqQxmeraRG-XXFHUT
-            tar -xf Thingi10K.tar.gz
-          else
-            tar -xf Thingi10K.tar.gz
-          fi
+          mkdir -p hssd
+          cd hssd
 
+          git clone https://huggingface.co/datasets/hssd/hssd-models
+          
         volumeMounts:
         - {name: project, mountPath: /mnt/prj/}
         - {name: data, mountPath: /mnt/data}

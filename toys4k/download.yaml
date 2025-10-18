@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: dokh-thingi10k-download
+  name: dokh-toys4k-download
 spec:
   ttlSecondsAfterFinished: 60
   template:
@@ -20,30 +20,26 @@ spec:
           medium: Memory
           sizeLimit: 256Gi
       containers:
-      - name: thingi10k-download
+      - name: toys4k-download
         image: kohido/3d_dl_cuda129:v0.0.6
         env:
         - name: PYTHONUNBUFFERED
           value: "1"
-        - name: GITHUB_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: dokh-secret
-              key: GITHUB_TOKEN
         command: ["bash","-lc"]
         args:
         - |
           set -e
-
-          cd /mnt/data
-          mkdir -p thingi10k
-          cd thingi10k
-          if [ ! -f Thingi10K.tar.gz ]; then
-            gdown 1RlDvNiFLDRztN0zWqQxmeraRG-XXFHUT
-            tar -xf Thingi10K.tar.gz
+          cd /mnt/prj/
+          if [ -d "3ddata" ]; then
+            cd 3ddata
+            git pull
           else
-            tar -xf Thingi10K.tar.gz
+            git clone https://github.com/trinity-graphics/3ddata.git
+            cd 3ddata/
           fi
+          cd toys4k
+          chmod +x download.sh
+          ./download.sh
 
         volumeMounts:
         - {name: project, mountPath: /mnt/prj/}

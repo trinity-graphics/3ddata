@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: dokh-thingi10k-download
+  name: dokh-mesh-500-download
 spec:
   ttlSecondsAfterFinished: 60
   template:
@@ -20,7 +20,7 @@ spec:
           medium: Memory
           sizeLimit: 256Gi
       containers:
-      - name: thingi10k-download
+      - name: mesh-500-download
         image: kohido/3d_dl_cuda129:v0.0.6
         env:
         - name: PYTHONUNBUFFERED
@@ -36,13 +36,13 @@ spec:
           set -e
 
           cd /mnt/data
-          mkdir -p thingi10k
-          cd thingi10k
-          if [ ! -f Thingi10K.tar.gz ]; then
-            gdown 1RlDvNiFLDRztN0zWqQxmeraRG-XXFHUT
-            tar -xf Thingi10K.tar.gz
+          mkdir -p mesh_500
+          cd mesh_500
+          if [ ! -f mesh_500.zip ]; then
+            gdown 1szbNQa6vQlRemUoAt9UFQKRRtnn_RwaW
+            unzip mesh_500.zip
           else
-            tar -xf Thingi10K.tar.gz
+            unzip mesh_500.zip
           fi
 
         volumeMounts:
