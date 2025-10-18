@@ -6,6 +6,6 @@ cd ../analysis
 for chunk_index in {0..63}
 do 
     python3 base.py \
-        --folder_path "${INPUT_DIR}/glb/github/chunk_${chunk_index}" \
-        --output_path "${OUTPUT_DIR}/glb/github/chunk_${chunk_index}.csv"
+        --folder_path "${INPUT_DIR}/gltf/github/chunk_${chunk_index}" \
+        --output_path "${OUTPUT_DIR}/gltf/github/chunk_${chunk_index}.csv"
 done
