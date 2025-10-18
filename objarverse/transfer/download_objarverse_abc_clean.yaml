@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: dokh-download-objarverse-abc-clean
+  name: dokh-objarverse-download-abc-clean
 spec:
   ttlSecondsAfterFinished: 60
   template:
@@ -20,7 +20,7 @@ spec:
           medium: Memory
           sizeLimit: 64Gi
       containers:
-      - name: download-objarverse-abc-clean
+      - name: objarverse-download-abc-clean
         image: kohido/base_dl_cuda129:v0.0.7
         env:
         - name: PYTHONUNBUFFERED
