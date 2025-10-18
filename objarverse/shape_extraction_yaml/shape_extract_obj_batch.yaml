@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: dokh-objarverse-download-obj
+  name: dokh-objarverse-shape-extraction-obj-batch
 spec:
   ttlSecondsAfterFinished: 60
   template:
@@ -12,24 +12,22 @@ spec:
       - name: project
         persistentVolumeClaim:
           claimName: prj-0
-      - name: data
+      - name: raw
         persistentVolumeClaim:
           claimName: objarverse-raw
+      - name: shape
+        persistentVolumeClaim:
+          claimName: objarverse-shape
       - name: dshm
         emptyDir:
           medium: Memory
           sizeLimit: 256Gi
       containers:
-      - name: objarverse-download-obj
-        image: kohido/3d_dl_cuda129:v0.0.3
+      - name: objarverse-shape-extraction-obj-batch
+        image: kohido/3d_dl_cuda129:v0.0.4
         env:
         - name: PYTHONUNBUFFERED
           value: "1"
-        - name: GITHUB_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: dokh-secret
-              key: GITHUB_TOKEN
         command: ["bash","-lc"]
         args:
         - |
@@ -42,18 +40,14 @@ spec:
             git clone https://github.com/trinity-graphics/3ddata.git
             cd 3ddata/
           fi
-          cd objarverse/download_script
-          # curl -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/user
-          curl -H "Authorization: Bearer $GITHUB_TOKEN" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            https://api.github.com/rate_limit
-          curl -I https://api.github.com/users/octocat
-          bash run.sh obj
+          cd objarverse/shape_extraction_script
+          bash shape_extract_obj_batch.sh 8
 
         volumeMounts:
         - {name: project, mountPath: /mnt/prj/}
-        - {name: data, mountPath: /mnt/data}
+        - {name: raw, mountPath: /mnt/raw/}
+        - {name: shape, mountPath: /mnt/shape/}
         - {name: dshm, mountPath: /dev/shm}
         resources:
-          limits:   { cpu: "16",  memory: "64Gi" }
-          requests: { cpu: "16",  memory: "64Gi" }
+          limits:   { cpu: "96",  memory: "512Gi" }
+          requests: { cpu: "96",  memory: "512Gi" }

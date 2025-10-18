@@ -1,9 +1,3 @@
-#!/bin/bash
-
-# Usage: bash myfile.sh <num_parallel_jobs>
-# Example: bash myfile.sh 8
-
-# Default parallel jobs to 4 if not provided
 NUM_PARALLEL=${1:-4}
 
 INPUT_DIR="/mnt/shape/objarverse_shape"
