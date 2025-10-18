@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: dokh-shapenet-extract
+spec:
+  ttlSecondsAfterFinished: 60
+  template:
+    spec:
+      schedulerName: volcano
+      restartPolicy: Never
+      volumes:
+      - name: project
+        persistentVolumeClaim:
+          claimName: prj-0
+      - name: raw
+        persistentVolumeClaim:
+          claimName: objarverse-raw
+      - name: dshm
+        emptyDir:
+          medium: Memory
+          sizeLimit: 256Gi
+      containers:
+      - name: shapenet-extract
+        image: kohido/3d_dl_cuda129:v0.0.4
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        command: ["bash","-lc"]
+        args:
+        - |
+          set -e
+          cd /mnt/raw/shapenet
+          if [ -f shapenet.zip ]; then
+            unzip shapenet.zip
+          else
+            echo "shapenet.zip does not exist"
+          fi
+
+        volumeMounts:
+        - {name: project, mountPath: /mnt/prj/}
+        - {name: raw, mountPath: /mnt/raw/}
+        - {name: dshm, mountPath: /dev/shm}
+        resources:
+          limits:   { cpu: "48",  memory: "256Gi" }
+          requests: { cpu: "48",  memory: "256Gi" }
