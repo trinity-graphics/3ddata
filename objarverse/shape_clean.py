@@ -170,7 +170,7 @@ if __name__ == '__main__':
             check_dct['normalize_vertices_scale'].append({'file': file, 'error': str(e)})
             continue
         try:
-            mesh = mesh.merge_close_vertices(1e-8)
+            mesh = mesh.merge_close_vertices(0.005) #1e-8
         except Exception as e:
             check_dct['merge_close_vertices'].append({'file': file, 'error': str(e)})
             continue
