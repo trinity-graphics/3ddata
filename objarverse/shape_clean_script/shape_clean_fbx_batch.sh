@@ -9,7 +9,7 @@ echo "Running shape_clean.py with ${NUM_PARALLEL} parallel jobs..."
 
 seq 0 754 | xargs -n 1 -P "${NUM_PARALLEL}" -I {} \
 python3 shape_clean.py \
-    --input_dir "${INPUT_DIR}/gltf/github/chunk_{}" \
-    --output_dir "${OUTPUT_DIR}/gltf/github/chunk_{}"
+    --input_dir "${INPUT_DIR}/fbx/github/chunk_{}" \
+    --output_dir "${OUTPUT_DIR}/fbx/github/chunk_{}"
 
 echo "All chunks processed."
