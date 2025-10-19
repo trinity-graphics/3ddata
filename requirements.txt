@@ -1,0 +1,10 @@
+polars==1.34.0
+numpy==2.3.4
+jupyter
+pyvista==0.46.3
+git+https://github.com/EasternJournalist/utils3d.git#egg=utils3d
+pygltflib==1.16.5
+pymeshlab==2025.7
+xatlas==0.0.11
+PyMCubes==0.1.6
+kiui[full]==0.2.18
