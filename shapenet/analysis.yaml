@@ -1,0 +1,49 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: dokh-shapenet-analysis-clean
+spec:
+  ttlSecondsAfterFinished: 60
+  template:
+    spec:
+      schedulerName: volcano
+      restartPolicy: Never
+      volumes:
+      - name: project
+        persistentVolumeClaim:
+          claimName: prj-0
+      - name: clean
+        persistentVolumeClaim:
+          claimName: objarverse-clean
+      - name: dshm
+        emptyDir:
+          medium: Memory
+          sizeLimit: 256Gi
+      containers:
+      - name: shapenet-analysis-clean
+        image: kohido/3d_dl_cuda129:v0.0.5
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        command: ["bash","-lc"]
+        args:
+        - |
+          set -e
+          cd /mnt/prj/
+          if [ -d "3ddata" ]; then
+            cd 3ddata
+            git pull
+          else
+            git clone https://github.com/trinity-graphics/3ddata.git
+            cd 3ddata/
+          fi
+          cd shapenet/
+          bash analysis.sh
+
+        volumeMounts:
+        - {name: project, mountPath: /mnt/prj/}
+        - {name: clean, mountPath: /mnt/clean/}
+        - {name: dshm, mountPath: /dev/shm}
+        resources:
+          limits:   { cpu: "48",  memory: "256Gi" }
+          requests: { cpu: "48",  memory: "256Gi" }
