@@ -96,7 +96,7 @@ if __name__ == '__main__':
 	parser.add_argument("--input_dir", required=True, help="input_dir")
 	parser.add_argument("--output_dir", required=True, help="output_dir")
 	parser.add_argument("--blender_exec", default='blender', help="blender execution")
-	parser.add_argument("--jobs", default=4, help="# Jobs")
+	parser.add_argument("--jobs", default=4, type=int, help="# Jobs")
 	parser.add_argument("--file_ext", required=True, help="file_ext")
 	
 	args = parser.parse_args()
