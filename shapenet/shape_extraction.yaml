@@ -23,7 +23,7 @@ spec:
           medium: Memory
           sizeLimit: 256Gi
       containers:
-      - name: objarverse-shape-extraction-obj-batch
+      - name: shapenet-shape-extraction
         image: kohido/3d_dl_cuda129:v0.0.4
         env:
         - name: PYTHONUNBUFFERED
