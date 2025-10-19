@@ -87,6 +87,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--input_dir", required=True, help="input_dir")
     parser.add_argument("--output_dir", required=True, help="output_dir")
+    parser.add_argument("--reset", action='store_true', help='hard reset')
 
     args = parser.parse_args()
 
@@ -129,11 +130,6 @@ if __name__ == '__main__':
             check_dct['reading_mesh'].append({'file': file, 'error': str(e)})
             continue
         try:
-            mesh = mesh.merge_close_vertices(1e-8)
-        except Exception as e:
-            check_dct['merge_close_vertices'].append({'file': file, 'error': str(e)})
-            continue
-        try:
             mesh = mesh.remove_duplicated_triangles()
         except Exception as e:
             check_dct['remove_duplicated_triangles'].append({'file': file, 'error': str(e)})
@@ -172,6 +168,11 @@ if __name__ == '__main__':
             mesh = normalize_mesh_scale(mesh, 0.5)
         except Exception as e:
             check_dct['normalize_vertices_scale'].append({'file': file, 'error': str(e)})
+            continue
+        try:
+            mesh = mesh.merge_close_vertices(1e-8)
+        except Exception as e:
+            check_dct['merge_close_vertices'].append({'file': file, 'error': str(e)})
             continue
         try:
             export_tria_obj(mesh, output_path)
