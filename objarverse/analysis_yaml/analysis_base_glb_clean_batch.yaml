@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: dokh-objarverse-analysis-base-gltf-clean-batch
+  name: dokh-objarverse-analysis-base-glb-clean-batch
 spec:
   ttlSecondsAfterFinished: 60
   template:
@@ -20,7 +20,7 @@ spec:
           medium: Memory
           sizeLimit: 256Gi
       containers:
-      - name: objarverse-analysis-base-gltf-clean-batch
+      - name: objarverse-analysis-base-glb-clean-batch
         image: kohido/3d_dl_cuda129:v0.0.5
         env:
         - name: PYTHONUNBUFFERED
@@ -38,7 +38,7 @@ spec:
             cd 3ddata/
           fi
           cd objarverse/analysis_script
-          bash analysis_base_gltf_clean_batch.sh 8
+          bash analysis_base_glb_clean_batch.sh 8
 
         volumeMounts:
         - {name: project, mountPath: /mnt/prj/}
