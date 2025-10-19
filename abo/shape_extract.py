@@ -40,8 +40,8 @@ def process_file(file_path, output_path):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
-	parser.add_argument("--input_dir", required=True, help="input_dir")
-	parser.add_argument("--output_dir", required=True, help="output_dir")
+    parser.add_argument("--input_dir", required=True, help="input_dir")
+    parser.add_argument("--output_dir", required=True, help="output_dir")
     
     file_paths = glob(f'{args.input_dir}/*.glb')
     total_files = len(file_paths)
