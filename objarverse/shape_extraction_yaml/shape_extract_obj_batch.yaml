@@ -41,7 +41,7 @@ spec:
             cd 3ddata/
           fi
           cd objarverse/shape_extraction_script
-          bash shape_extract_obj_batch.sh 16
+          bash shape_extract_obj_batch.sh 32
 
         volumeMounts:
         - {name: project, mountPath: /mnt/prj/}
