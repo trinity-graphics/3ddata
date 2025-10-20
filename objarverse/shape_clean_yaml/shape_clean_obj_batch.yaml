@@ -41,7 +41,7 @@ spec:
             cd 3ddata/
           fi
           cd objarverse/shape_clean_script
-          bash shape_clean_obj_batch.sh 24
+          bash shape_clean_obj_batch.sh 128
 
         volumeMounts:
         - {name: project, mountPath: /mnt/prj/}
