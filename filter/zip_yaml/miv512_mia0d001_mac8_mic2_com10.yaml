@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: dokh-zip-miv512-mia0d001-mac8-mic2-com10
+spec:
+  ttlSecondsAfterFinished: 60
+  template:
+    spec:
+      schedulerName: volcano
+      restartPolicy: Never
+      volumes:
+      - name: filter
+        persistentVolumeClaim:
+          claimName: objarverse-filter
+      - name: dshm
+        emptyDir:
+          medium: Memory
+          sizeLimit: 256Gi
+      containers:
+      - name: zip-miv512-mia0d001-mac8-mic2-com10
+        image: kohido/3d_dl_cuda129:v0.0.7
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        command: ["bash","-lc"]
+        args:
+        - |
+          set -e
+          cd /mnt/filter/
+          ls filtered_miv512_mia0d001_mac8_mic2_com10 |wc -l
+          # zip -r filtered_miv512_mia0d001_mac8_mic2_com10.zip filtered_miv512_mia0d001_mac8_mic2_com10/
+
+        volumeMounts:
+        - {name: filter, mountPath: /mnt/filter/}
+        - {name: dshm, mountPath: /dev/shm}
+        resources:
+          limits:   { cpu: "96",  memory: "512Gi" }
+          requests: { cpu: "96",  memory: "512Gi" }

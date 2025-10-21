@@ -17,8 +17,8 @@ if __name__ == '__main__':
     if not os.path.exists(args.input_path):
         raise ValueError(f'{args.input_path} does not exists')
     
-    file_name = os.path.basename(args.input_path)
-    if 'csv' not in file_name:
+    filename = os.path.basename(args.input_path)
+    if 'csv' not in filename:
         raise ValueError(f'{args.input_path} is not a CSV file')
 
     save_dir = os.path.join(args.dst_dir, f"{filename.replace('csv', '')}")
