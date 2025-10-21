@@ -21,7 +21,7 @@ if __name__ == '__main__':
     if 'csv' not in filename:
         raise ValueError(f'{args.input_path} is not a CSV file')
 
-    save_dir = os.path.join(args.dst_dir, f"{filename.replace('csv', '')}")
+    save_dir = os.path.join(args.dst_dir, f"{filename.replace('.csv', '')}")
     os.makedirs(save_dir, exist_ok=True)
 
     df = pl.read_csv(args.input_path)
