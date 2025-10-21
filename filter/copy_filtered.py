@@ -29,17 +29,35 @@ if __name__ == '__main__':
     file_paths = df['file_path'].to_list()
 
     def copy_file(src_path):
-        dst_path = os.path.join(save_dir, os.path.basename(src_path))
+        base = os.path.basename(src_path)
+        dst_path = os.path.join(save_dir, base)
         try:
+            if not os.path.exists(src_path):
+                return ('error', src_path, 'source not found')
+
+            # If destination exists, append a numeric suffix before the extension
+            if os.path.exists(dst_path):
+                name, ext = os.path.splitext(base)
+                i = 1
+                while True:
+                    candidate = os.path.join(save_dir, f"{name}_{i}{ext}")
+                    if not os.path.exists(candidate):
+                        dst_path = candidate
+                        break
+                    i += 1
+
             shutil.copy2(src_path, dst_path)
-            return True
+            return ('copied', src_path, dst_path)
         except Exception as e:
-            return f"Error copying {src_path}: {e}"
+            return ('error', src_path, str(e))
 
     with Pool(cpu_count()) as pool:
         results = list(tqdm(pool.imap_unordered(copy_file, file_paths), total=len(file_paths), desc="Copying files"))
 
-    errors = [r for r in results if r is not True]
+    # summarize results
+    copied = [r for r in results if isinstance(r, tuple) and r[0] == 'copied']
+    errors = [r for r in results if isinstance(r, tuple) and r[0] == 'error']
+    print(f"Copied: {len(copied)} files")
     if errors:
         print("Some errors occurred during copying:")
         for err in errors:
