@@ -22,9 +22,7 @@ if __name__ == '__main__':
 
     df = pl.read_csv(args.input_path)
 
-    
-
-    file_paths = df.get_column('file_path').to_arrow().to_numpy()
+    file_paths = df['file_path'].to_list()
 
     def copy_file(src_path):
         dst_path = os.path.join(save_dir, os.path.basename(src_path))
