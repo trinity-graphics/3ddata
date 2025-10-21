@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: dokh-filter-miv512_mia0d001_mac8_mic2_com10
+  name: dokh-filter-miv512-mia0d001-mac8-mic2-com10
 spec:
   ttlSecondsAfterFinished: 60
   template:
@@ -20,7 +20,7 @@ spec:
           medium: Memory
           sizeLimit: 256Gi
       containers:
-      - name: filter-miv512_mia0d001_mac8_mic2_com10
+      - name: filter-miv512-mia0d001-mac8-mic2-com10
         image: kohido/3d_dl_cuda129:v0.0.7
         env:
         - name: PYTHONUNBUFFERED
@@ -38,10 +38,10 @@ spec:
             cd 3ddata/
           fi
           cd filter/
-          python3 filter \
+          python3 filter.py \
             --input_dir /mnt/clean/ \
             --output_dir /mnt/clean/objarverse_filter/ \
-            --filter_book miv512_mia0d001_mac8_mic2_com10
+            --filter_name miv512_mia0d001_mac8_mic2_com10
 
         volumeMounts:
         - {name: project, mountPath: /mnt/prj/}

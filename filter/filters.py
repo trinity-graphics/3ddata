@@ -13,18 +13,18 @@ def _filter_max(df: pl.DataFrame, column: str, max_value: int = None, strict: bo
     return None
 
 # Area
-def filter_area_min(df: pl.DataFrame, min_area: int = None, strict: bool = False):
-    return _filter_min(df, 'mesh_area', min_area, strict)
+def filter_area_min(df: pl.DataFrame, min_val: int = None, strict: bool = False):
+    return _filter_min(df, 'mesh_area', min_val, strict)
 
-def filter_area_max(df: pl.DataFrame, max_area: int = None, strict: bool = False):
-    return _filter_max(df, 'mesh_area', max_area, strict)
+def filter_area_max(df: pl.DataFrame, max_val: int = None, strict: bool = False):
+    return _filter_max(df, 'mesh_area', max_val, strict)
 
 # Volume
-def filter_volume_min(df: pl.DataFrame, min_vol: int = None, strict: bool = False):
-    return _filter_min(df, 'mesh_volume', min_vol, strict)
+def filter_volume_min(df: pl.DataFrame, min_val: int = None, strict: bool = False):
+    return _filter_min(df, 'mesh_volume', min_val, strict)
 
-def filter_volume_max(df: pl.DataFrame, max_vol: int = None, strict: bool = False):
-    return _filter_max(df, 'mesh_volume', max_vol, strict)
+def filter_volume_max(df: pl.DataFrame, max_val: int = None, strict: bool = False):
+    return _filter_max(df, 'mesh_volume', max_val, strict)
 
 # Vertices
 def filter_num_vertices_min(df: pl.DataFrame, min_val: int = None, strict: bool = False):
