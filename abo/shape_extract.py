@@ -2,7 +2,6 @@ import os
 import sys
 import argparse
 
-from utils.io import import_tria_obj, export_tria_obj
 from glob import glob
 from tqdm import tqdm
 
