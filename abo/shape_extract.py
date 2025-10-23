@@ -2,6 +2,8 @@ import os
 import sys
 import argparse
 
+import open3d as o3d
+
 from glob import glob
 from tqdm import tqdm
 
