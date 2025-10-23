@@ -42,6 +42,8 @@ if __name__ == '__main__':
     parser.add_argument("--input_dir", required=True, help="input_dir")
     parser.add_argument("--output_dir", required=True, help="output_dir")
     
+    args = parser.parse_args()
+    
     file_paths = glob(f'{args.input_dir}/*.glb')
     total_files = len(file_paths)
     print(f'Number of files: {total_files}')
