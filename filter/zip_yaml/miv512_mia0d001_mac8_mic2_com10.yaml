@@ -28,7 +28,7 @@ spec:
           set -e
           cd /mnt/filter/
           ls filtered_miv512_mia0d001_mac8_mic2_com10 |wc -l
-          # zip -r filtered_miv512_mia0d001_mac8_mic2_com10.zip filtered_miv512_mia0d001_mac8_mic2_com10/
+          zip -r filtered_miv512_mia0d001_mac8_mic2_com10.zip filtered_miv512_mia0d001_mac8_mic2_com10/
 
         volumeMounts:
         - {name: filter, mountPath: /mnt/filter/}

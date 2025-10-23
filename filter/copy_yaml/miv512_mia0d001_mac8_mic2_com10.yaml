@@ -40,6 +40,7 @@ spec:
             git clone https://github.com/trinity-graphics/3ddata.git
             cd 3ddata/
           fi
+          rm -rf /mnt/filter/filtered_miv512_mia0d001_mac8_mic2_com10
           cd filter/
           python3 copy_filtered.py \
             --input_path /mnt/clean/objarverse_filter/filtered_miv512_mia0d001_mac8_mic2_com10.csv \
