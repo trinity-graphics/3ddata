@@ -23,7 +23,7 @@ spec:
           medium: Memory
           sizeLimit: 256Gi
       containers:
-      - name: mesh-500-shape-clean
+      - name: abo-shape-clean
         image: kohido/3d_dl_cuda129:v0.0.4
         env:
         - name: PYTHONUNBUFFERED
