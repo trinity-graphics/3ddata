@@ -9,9 +9,6 @@ spec:
       schedulerName: volcano
       restartPolicy: Never
       volumes:
-      - name: project
-        persistentVolumeClaim:
-          claimName: prj-0
       - name: data
         persistentVolumeClaim:
           claimName: objarverse-raw
@@ -35,11 +32,35 @@ spec:
         - |
           set -e
           cd /mnt/data/abo/3dmodels/original/
-          for i in {0..9}
-            ls |wc -l $i
+          # Save counts to a log file in the current folder
+          LOG_FILE=download_status.log
+          echo "download status: $(date -u)" > "$LOG_FILE"
+
+          # Numbers 0..9
+          echo "Numbers 0..9:" >> "$LOG_FILE"
+          for i in {0..9}; do
+            # If a subdirectory named $i exists, count its entries; otherwise count files in current dir
+            if [ -d "$i" ]; then
+              cnt=$(ls -A "$i" 2>/dev/null | wc -l)
+            else
+              cnt=$(ls -A 2>/dev/null | wc -l)
+            fi
+            echo "$i: $cnt" >> "$LOG_FILE"
+          done
+
+          echo "" >> "$LOG_FILE"
+          # Letters A..Z
+          echo "Letters A..Z:" >> "$LOG_FILE"
+          for c in {A..Z}; do
+            if [ -d "$c" ]; then
+              cnt=$(ls -A "$c" 2>/dev/null | wc -l)
+            else
+              cnt=$(ls -A 2>/dev/null | wc -l)
+            fi
+            echo "$c: $cnt" >> "$LOG_FILE"
+          done
 
         volumeMounts:
-        - {name: project, mountPath: /mnt/prj/}
         - {name: data, mountPath: /mnt/data}
         - {name: dshm, mountPath: /dev/shm}
         resources:
