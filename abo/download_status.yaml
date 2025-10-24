@@ -1,0 +1,47 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: dokh-abo-download-status
+spec:
+  ttlSecondsAfterFinished: 60
+  template:
+    spec:
+      schedulerName: volcano
+      restartPolicy: Never
+      volumes:
+      - name: project
+        persistentVolumeClaim:
+          claimName: prj-0
+      - name: data
+        persistentVolumeClaim:
+          claimName: objarverse-raw
+      - name: dshm
+        emptyDir:
+          medium: Memory
+          sizeLimit: 256Gi
+      containers:
+      - name: abo-download-status
+        image: kohido/3d_dl_cuda129:v0.0.6
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        - name: GITHUB_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: dokh-secret
+              key: GITHUB_TOKEN
+        command: ["bash","-lc"]
+        args:
+        - |
+          set -e
+          cd /mnt/data/abo/3dmodels/original/
+          for i in {0..9}
+            ls |wc -l $i
+
+        volumeMounts:
+        - {name: project, mountPath: /mnt/prj/}
+        - {name: data, mountPath: /mnt/data}
+        - {name: dshm, mountPath: /dev/shm}
+        resources:
+          limits:   { cpu: "16",  memory: "64Gi" }
+          requests: { cpu: "16",  memory: "64Gi" }
