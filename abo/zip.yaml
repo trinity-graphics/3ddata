@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: dokh-abo-zip
+spec:
+  ttlSecondsAfterFinished: 60
+  template:
+    spec:
+      schedulerName: volcano
+      restartPolicy: Never
+      volumes:
+      - name: clean
+        persistentVolumeClaim:
+          claimName: objarverse-clean
+      - name: dshm
+        emptyDir:
+          medium: Memory
+          sizeLimit: 256Gi
+      containers:
+      - name: abo-zip
+        image: kohido/3d_dl_cuda129:v0.0.4
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        command: ["bash","-lc"]
+        args:
+        - |
+          set -e
+          cd /mnt/clean/
+          zip -r abo.zip abo/
+
+        volumeMounts:
+        - {name: clean, mountPath: /mnt/clean/}
+        - {name: dshm, mountPath: /dev/shm}
+        resources:
+          limits:   { cpu: "96",  memory: "512Gi" }
+          requests: { cpu: "96",  memory: "512Gi" }

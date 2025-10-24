@@ -34,7 +34,7 @@ spec:
           cd /mnt/data/abo/3dmodels/obj/
           # Save counts to a log file in the current folder
           LOG_FILE=shape_status.log
-          echo "download status: $(date -u)" > "$LOG_FILE"
+          echo "shape extraction status: $(date -u)" > "$LOG_FILE"
 
           # Total count of entries in current directory
           TOTAL=$(ls */* -A 2>/dev/null | wc -l)

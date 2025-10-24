@@ -34,7 +34,7 @@ spec:
           cd /mnt/data/abo/3dmodels/obj/
           # Save counts to a log file in the current folder
           LOG_FILE=clean_status.log
-          echo "download status: $(date -u)" > "$LOG_FILE"
+          echo "cleaning status: $(date -u)" > "$LOG_FILE"
 
           # Total count of entries in current directory
           TOTAL=$(ls */* -A 2>/dev/null | wc -l)
@@ -45,7 +45,7 @@ spec:
           for i in {0..9}; do
             # If a subdirectory named $i exists, count its entries; otherwise count files in current dir
             if [ -d "$i" ]; then
-              cnt=$(ls -A "$i" 2>/dev/null | wc -l)cd med
+              cnt=$(ls -A "$i" 2>/dev/null | wc -l)
             else
               cnt=$(ls -A 2>/dev/null | wc -l)
             fi
