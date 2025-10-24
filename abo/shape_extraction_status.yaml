@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: dokh-abo-download-status
+  name: dokh-abo-shape-extraction-status
 spec:
   ttlSecondsAfterFinished: 60
   template:
@@ -11,13 +11,13 @@ spec:
       volumes:
       - name: data
         persistentVolumeClaim:
-          claimName: objarverse-raw
+          claimName: objarverse-shape
       - name: dshm
         emptyDir:
           medium: Memory
           sizeLimit: 256Gi
       containers:
-      - name: abo-download-status
+      - name: abo-shape-extraction-status
         image: kohido/3d_dl_cuda129:v0.0.6
         env:
         - name: PYTHONUNBUFFERED
@@ -31,7 +31,7 @@ spec:
         args:
         - |
           set -e
-          cd /mnt/data/abo/3dmodels/original/
+          cd /mnt/data/abo/3dmodels/obj/
           # Save counts to a log file in the current folder
           LOG_FILE=download_status.log
           echo "download status: $(date -u)" > "$LOG_FILE"
