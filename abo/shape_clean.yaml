@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: dokh-shapenet-shape-clean
+  name: dokh-abo-shape-clean
 spec:
   ttlSecondsAfterFinished: 60
   template:
@@ -23,7 +23,7 @@ spec:
           medium: Memory
           sizeLimit: 256Gi
       containers:
-      - name: mesh-500-shape-clean
+      - name: abo-shape-clean
         image: kohido/3d_dl_cuda129:v0.0.4
         env:
         - name: PYTHONUNBUFFERED
@@ -40,7 +40,7 @@ spec:
             git clone https://github.com/trinity-graphics/3ddata.git
             cd 3ddata/
           fi
-          cd shapenet/
+          cd abo/
           bash shape_clean.sh
 
         volumeMounts:
