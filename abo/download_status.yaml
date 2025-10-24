@@ -36,6 +36,10 @@ spec:
           LOG_FILE=download_status.log
           echo "download status: $(date -u)" > "$LOG_FILE"
 
+          # Total count of entries in current directory
+          TOTAL=$(ls -A 2>/dev/null | wc -l)
+          echo "Total: $TOTAL" >> "$LOG_FILE"
+
           # Numbers 0..9
           echo "Numbers 0..9:" >> "$LOG_FILE"
           for i in {0..9}; do
